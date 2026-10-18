@@ -1,6 +1,8 @@
 # AGENTS.md
 
-Vue expense/trip reimbursement app (报销神器). **Web-only.** Not git-tracked.
+Vue expense/trip reimbursement app (报销神器). **Web-only.**
+
+Git: remote `git@github.com:766776751/-app.git`；`main` = V1 稳定打包分支，`dev` = 开发分支。忽略 `node_modules` / `dist` / APK / zip / android build 产物（见 `.gitignore`）。
 
 ## Layout
 
