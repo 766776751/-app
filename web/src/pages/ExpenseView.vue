@@ -35,7 +35,7 @@ async function loadThumbs() {
 const total = computed(() => store.all.reduce((s, r) => s + r.amount, 0))
 const pending = computed(() => store.all.filter((r) => r.status === 'PENDING').length)
 const paid = computed(() => store.all.filter((r) => r.status === 'PAID').length)
-const recent = computed(() => store.records.slice(0, 5))
+const recent = computed(() => store.records)
 
 function openEdit(id: number) {
   router.push(`/expense/${id}/edit`)
@@ -51,23 +51,19 @@ const catIcon: Record<ExpenseCategory, IconName> = {
 
 <template>
   <main class="page">
-    <ScreenHeader title="报销" subtitle="点按可编辑" mark-icon="wallet" />
+    <ScreenHeader title="报销" mark-icon="wallet" />
 
-    <section class="glass-card">
-      <h2 class="section-title">统计</h2>
+    <section class="glass-card compact-stats">
       <div class="stat-row" style="margin-top: 0">
         <div class="stat-tile">
-          <div class="icon-chip">¥</div>
-          <b class="tabnum">{{ total.toFixed(0) }}</b>
+          <b class="tabnum amount-text">¥{{ total.toFixed(0) }}</b>
           <span>总金额</span>
         </div>
         <div class="stat-tile">
-          <div class="icon-chip">待</div>
           <b class="tabnum">{{ pending }}</b>
           <span>待报销</span>
         </div>
         <div class="stat-tile">
-          <div class="icon-chip">已</div>
           <b class="tabnum">{{ paid }}</b>
           <span>已报销</span>
         </div>
@@ -75,7 +71,6 @@ const catIcon: Record<ExpenseCategory, IconName> = {
     </section>
 
     <section class="glass-card">
-      <h2 class="section-title">筛选</h2>
       <div class="chip-row" style="margin-top: 0">
         <button
           v-for="c in categories"
@@ -87,18 +82,18 @@ const catIcon: Record<ExpenseCategory, IconName> = {
           {{ c ? CATEGORY_LABEL[c] : '全部' }}
         </button>
       </div>
-      <div class="btn-row">
-        <button class="btn btn-primary" @click="router.push('/expense/add')">
-          <AppIcon name="plus" :size="16" />添加
+      <div class="btn-row" style="margin-top: 10px">
+        <button class="btn btn-primary" style="flex: 1" @click="router.push('/expense/add')">
+          <AppIcon name="plus" :size="16" />添加报销
         </button>
         <button class="btn btn-secondary" @click="router.push('/expense/history')">
-          <AppIcon name="history" :size="16" />历史
+          <AppIcon name="export" :size="16" />导出待报销
         </button>
       </div>
     </section>
 
     <section class="glass-card">
-      <h2 class="section-title">最近报销</h2>
+      <h2 class="section-title">记录</h2>
       <div v-if="store.isLoading" style="padding: 20px; text-align: center; color: var(--muted)">加载中…</div>
       <div v-else-if="!recent.length" class="empty">
         <div class="icon-chip">票</div>
@@ -107,7 +102,7 @@ const catIcon: Record<ExpenseCategory, IconName> = {
           {{
             store.selectedCategory
               ? `「${CATEGORY_LABEL[store.selectedCategory]}」下还没有记录`
-              : '点击「添加报销」录入第一笔费用'
+              : '点上方「添加报销」录入第一笔费用'
           }}
         </p>
         <button class="btn btn-primary" style="margin-top: 10px" @click="router.push('/expense/add')">
@@ -142,10 +137,21 @@ const catIcon: Record<ExpenseCategory, IconName> = {
           </div>
         </div>
         <div class="r">
-          <b class="tabnum">¥{{ r.amount.toFixed(2) }}</b>
-          <small style="color: var(--muted); font-size: 11px">点按编辑</small>
+          <b class="tabnum amount-text">¥{{ r.amount.toFixed(2) }}</b>
         </div>
       </div>
     </section>
   </main>
 </template>
+
+<style scoped>
+.compact-stats .stat-tile {
+  padding: 8px 6px;
+}
+.compact-stats .stat-tile b {
+  font-size: 16px;
+}
+.amount-text {
+  color: var(--amber);
+}
+</style>

@@ -28,6 +28,7 @@ const settingsStore = useSettingsStore()
 const now = new Date()
 const year = ref(now.getFullYear())
 const month = ref(now.getMonth() + 1)
+const exportOpen = ref(false)
 const showPreview = ref(false)
 const toast = ref('')
 const showCalendar = ref(false)
@@ -84,15 +85,14 @@ async function onShare() {
   }
 }
 
-const shortcuts = [
+function toggleExport() {
+  exportOpen.value = !exportOpen.value
+  if (!exportOpen.value) showPreview.value = false
+}
+
+const quickActions = [
   { to: '/trip/add', icon: 'car' as const, label: '添加行程' },
-  { to: '/expense', icon: 'wallet' as const, label: '报销管理' },
   { to: '/expense/add', icon: 'plus' as const, label: '添加报销' },
-  { to: '/expense/history', icon: 'history' as const, label: '历史记录' },
-  { to: '/destinations', icon: 'pin' as const, label: '常用目的地' },
-  { to: '/templates', icon: 'folder' as const, label: '项目模板' },
-  { to: '/recycle-bin', icon: 'trash' as const, label: '回收站' },
-  { to: '/settings', icon: 'settings' as const, label: '设置' },
 ]
 </script>
 
@@ -116,7 +116,7 @@ const shortcuts = [
           <span><AppIcon name="list" :size="12" /> 行程</span>
         </div>
         <div>
-          <b class="tabnum">¥{{ stats.amount.toFixed(0) }}</b>
+          <b class="tabnum amount-text">¥{{ stats.amount.toFixed(0) }}</b>
           <span><AppIcon name="money" :size="12" /> 金额</span>
         </div>
         <div>
@@ -128,6 +128,26 @@ const shortcuts = [
     </section>
 
     <section class="glass-card">
+      <h2 class="section-title"><AppIcon name="plus" :size="14" /> 快捷</h2>
+      <div class="quick-row">
+        <button
+          v-for="s in quickActions"
+          :key="s.to"
+          class="btn quick-action"
+          :class="s.label === '添加行程' ? 'btn-primary' : 'btn-secondary'"
+          @click="router.push(s.to)"
+        >
+          <AppIcon :name="s.icon" :size="18" />{{ s.label }}
+        </button>
+      </div>
+      <button class="export-toggle" type="button" @click="toggleExport">
+        <AppIcon name="export" :size="14" />
+        <span>{{ exportOpen ? '收起导出' : '展开导出' }}</span>
+        <span class="export-toggle-hint">{{ title }}</span>
+      </button>
+    </section>
+
+    <section v-if="exportOpen" class="glass-card">
       <h2 class="section-title"><AppIcon name="export" :size="14" /> 导出</h2>
       <div class="btn-row" style="margin-top: 0">
         <select v-model.number="year" class="field-box" style="min-height: 40px">
@@ -146,15 +166,15 @@ const shortcuts = [
       <div class="btn-row">
         <button class="btn btn-secondary" @click="showPreview = !showPreview">
           <AppIcon :name="showPreview ? 'close' : 'eye'" :size="16" />
-          {{ showPreview ? '收起' : '预览' }}
+          {{ showPreview ? '收起预览' : '预览表格' }}
         </button>
-        <button class="btn btn-secondary" @click="onShare">
-          <AppIcon name="share" :size="16" />分享文件
+        <button class="btn btn-secondary" @click="showCalendar = true">
+          <AppIcon name="list" :size="16" />行程日历
         </button>
       </div>
       <div class="btn-row">
-        <button class="btn btn-secondary" style="flex: 1" @click="showCalendar = true">
-          <AppIcon name="list" :size="16" />行程日历
+        <button class="btn btn-primary" style="flex: 1" @click="onShare">
+          <AppIcon name="share" :size="16" />分享文件
         </button>
       </div>
       <div v-if="showPreview" class="xls-scroll" style="max-height: 240px; margin-top: 8px">
@@ -174,20 +194,10 @@ const shortcuts = [
           </tbody>
         </table>
       </div>
-      <div v-if="!showPreview" class="hint-line">
+      <p v-else class="hint-line">
         <AppIcon name="pdf" :size="12" />
-        {{ title }} · 私车公用汇总
-      </div>
-    </section>
-
-    <section class="glass-card">
-      <h2 class="section-title"><AppIcon name="list" :size="14" /> 快捷</h2>
-      <div class="icon-grid">
-        <button v-for="s in shortcuts" :key="s.to" class="icon-cell" @click="router.push(s.to)">
-          <span class="icon-chip"><AppIcon :name="s.icon" :size="20" /></span>
-          <span class="icon-label">{{ s.label }}</span>
-        </button>
-      </div>
+        本月 {{ monthTrips.length }} 条行程 · 可预览后分享
+      </p>
     </section>
 
     <section class="glass-card">
@@ -195,7 +205,7 @@ const shortcuts = [
       <div v-if="!recentExpenses.length" class="empty">
         <div class="icon-chip"><AppIcon name="wallet" :size="24" /></div>
         <h3>暂无记录</h3>
-        <p>从下方快捷进入报销页</p>
+        <p>点上方「添加报销」录入第一笔</p>
       </div>
       <div
         v-for="r in recentExpenses"
@@ -211,7 +221,7 @@ const shortcuts = [
           <small>{{ r.date }}</small>
         </div>
         <div class="r">
-          <b class="tabnum">¥{{ r.amount.toFixed(2) }}</b>
+          <b class="tabnum amount-text">¥{{ r.amount.toFixed(2) }}</b>
         </div>
       </div>
     </section>
@@ -231,38 +241,41 @@ const shortcuts = [
   color: var(--muted);
   margin-top: 8px;
 }
-.icon-grid {
+.quick-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px 4px;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 0;
 }
-.icon-cell {
-  border: 0;
-  background: transparent;
-  padding: 4px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+.quick-action {
+  min-height: 48px;
+  font-size: 14px;
 }
-.icon-cell:active .icon-chip {
-  transform: scale(0.94);
-}
-.icon-chip {
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
-  transition: transform var(--dur-fast) ease;
-}
-.icon-label {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.2;
+.export-toggle {
   width: 100%;
-  text-align: center;
-  white-space: nowrap;
-  /* 最长五个字（常用目的地）也要完整显示 */
-  overflow: visible;
-  letter-spacing: -0.02em;
+  margin-top: 10px;
+  min-height: 40px;
+  border-radius: var(--radius-field);
+  border: 1px dashed var(--stroke-strong);
+  background: transparent;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 12px;
+  transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+.export-toggle:active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.export-toggle-hint {
+  margin-left: auto;
+  opacity: 0.75;
+  font-size: 11px;
+}
+.amount-text {
+  color: var(--amber);
 }
 </style>

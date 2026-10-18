@@ -98,3 +98,8 @@ a {
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
+
+/* 金额统一琥珀，与主色青区分 */
+.amount-text {
+  color: var(--amber);
+}

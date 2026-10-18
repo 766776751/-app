@@ -135,7 +135,7 @@ function pick(cell: DayCell) {
           <span><AppIcon name="list" :size="12" /> {{ monthSummary.days }} 天</span>
           <span class="tabnum">{{ monthSummary.count }} 次</span>
           <span class="tabnum">{{ monthSummary.km.toFixed(1) }} km</span>
-          <span class="tabnum">¥{{ monthSummary.amount.toFixed(0) }}</span>
+          <span class="tabnum amount-text">¥{{ monthSummary.amount.toFixed(0) }}</span>
         </div>
 
         <!-- 星期 -->
@@ -178,7 +178,7 @@ function pick(cell: DayCell) {
             <div v-for="t in selectedTrips" :key="t.id" class="cal-trip">
               <b>{{ t.destination }}</b>
               <span>{{ t.purpose }}</span>
-              <span class="tabnum right">{{ t.distance.toFixed(1) }}km · ¥{{ t.amount.toFixed(2) }}</span>
+              <span class="tabnum right amount-text">{{ t.distance.toFixed(1) }}km · ¥{{ t.amount.toFixed(2) }}</span>
             </div>
           </div>
         </div>

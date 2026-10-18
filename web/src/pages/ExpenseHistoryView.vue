@@ -199,7 +199,7 @@ async function exportPendingZip() {
           </div>
         </div>
         <div class="r">
-          <b class="tabnum">¥{{ r.amount.toFixed(2) }}</b>
+          <b class="tabnum amount-text">¥{{ r.amount.toFixed(2) }}</b>
           <div>
             <button
               class="btn btn-secondary"

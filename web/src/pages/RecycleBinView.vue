@@ -79,7 +79,7 @@ async function purge(id: number) {
         <div class="icon-chip">车</div>
         <div class="l">
           <b>{{ t.destination }}</b>
-          <small>{{ t.date }} · {{ t.purpose }} · ¥{{ t.amount.toFixed(2) }}</small>
+          <small>{{ t.date }} · {{ t.purpose }} · <span class="amount-text">¥{{ t.amount.toFixed(2) }}</span></small>
         </div>
         <div class="r">
           <button

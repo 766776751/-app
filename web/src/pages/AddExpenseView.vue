@@ -223,7 +223,6 @@ function onPlus() {
       v-if="padOpen"
       :model-value="amount"
       title="输入报销金额 (元)"
-      hint="0.00"
       @update:model-value="(v) => (amount = v)"
       @close="padOpen = false"
     />

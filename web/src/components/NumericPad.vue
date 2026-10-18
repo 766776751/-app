@@ -5,16 +5,15 @@ import { sanitizeNumericInput } from '@/utils/numeric'
 const props = defineProps<{
   modelValue: string
   title: string
-  hint?: string
+  /** 父级累加中：+ 按钮高亮 */
+  plusActive?: boolean
 }>()
 const emit = defineEmits<{ 'update:modelValue': [string]; close: [] }>()
 
 const confirmClear = ref(false)
 
-const display = computed(() => {
-  const v = props.modelValue
-  return v || props.hint || '0'
-})
+/** 默认空值，不显示 0，避免用户先清空一次 */
+const display = computed(() => props.modelValue || '')
 
 function press(d: string) {
   confirmClear.value = false
@@ -44,17 +43,21 @@ function plus() {
   <Teleport to="body">
     <div class="pad-backdrop" @click.self="emit('close')">
       <div class="pad-sheet" style="user-select: none; -webkit-user-select: none">
+        <div class="pad-handle" />
         <div style="display: flex; align-items: center">
-          <strong style="flex: 1">{{ title }}</strong>
+          <strong style="flex: 1; font-size: 14px">{{ title }}</strong>
           <button
             class="icon-chip"
-            style="width: 36px; height: 36px; border: 0"
+            style="width: 32px; height: 32px; border: 0"
             @click="emit('close')"
           >
             ×
           </button>
         </div>
-        <div class="pad-display tabnum" style="user-select: none">{{ display }}</div>
+        <div class="pad-display tabnum" :class="{ empty: !display }" style="user-select: none">
+          <span v-if="!display" class="pad-placeholder">输入数字</span>
+          <template v-else>{{ display }}</template>
+        </div>
         <div class="pad-grid">
           <button
             v-for="k in ['1','2','3','4','5','6','7','8','9','.','0','⌫']"
@@ -75,8 +78,8 @@ function plus() {
             {{ confirmClear ? '确认清空？' : '清空' }}
           </button>
           <button
-            class="btn btn-secondary"
-            style="color: var(--tertiary); background: var(--tertiary-soft); border: 0"
+            class="btn btn-secondary pad-plus"
+            :class="{ active: plusActive }"
             @click="plus"
           >
             +
@@ -87,3 +90,39 @@ function plus() {
     </div>
   </Teleport>
 </template>
+
+<style scoped>
+.pad-backdrop {
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.pad-sheet {
+  max-height: 58dvh;
+  overflow: auto;
+  padding-bottom: calc(12px + var(--safe-bottom));
+}
+.pad-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--stroke-strong);
+  margin: 0 auto 8px;
+}
+.pad-display.empty {
+  border-color: var(--stroke-strong);
+  color: var(--muted);
+}
+.pad-placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font);
+  opacity: 0.7;
+}
+.pad-plus.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+</style>

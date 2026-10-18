@@ -188,7 +188,7 @@ function padDisplay() {
       v-if="padOpen"
       :model-value="hasPlus && !distance ? formatNum(accum) + '+' : distance"
       :title="`输入距离 (km)${hasPlus ? ' · 累加中' : ''}`"
-      hint="0"
+      :plus-active="hasPlus"
       @update:model-value="onPadInput"
       @close="closePad"
     />

@@ -275,8 +275,8 @@ function planTotal(p: { add: number; cover: number }) {
     </section>
 
     <section class="glass-card">
-      <h2 class="section-title"><AppIcon name="list" :size="14" /> 管理</h2>
-      <div class="icon-grid">
+      <h2 class="section-title"><AppIcon name="list" :size="14" /> 模板管理</h2>
+      <div class="icon-grid two">
         <button class="icon-cell" title="常用目的地" @click="router.push('/destinations')">
           <span class="icon-chip"><AppIcon name="pin" :size="20" /></span>
           <span class="icon-label">常用目的地</span>
@@ -285,13 +285,19 @@ function planTotal(p: { add: number; cover: number }) {
           <span class="icon-chip"><AppIcon name="folder" :size="20" /></span>
           <span class="icon-label">项目模板</span>
         </button>
-        <button class="icon-cell" title="回收站" @click="router.push('/recycle-bin')">
-          <span class="icon-chip"><AppIcon name="trash" :size="20" /></span>
-          <span class="icon-label">回收站</span>
-        </button>
-        <button class="icon-cell" title="历史记录" @click="router.push('/expense/history')">
+      </div>
+    </section>
+
+    <section class="glass-card">
+      <h2 class="section-title"><AppIcon name="download" :size="14" /> 数据维护</h2>
+      <div class="icon-grid two">
+        <button class="icon-cell" title="全部记录" @click="router.push('/expense/history')">
           <span class="icon-chip"><AppIcon name="history" :size="20" /></span>
-          <span class="icon-label">历史记录</span>
+          <span class="icon-label">全部记录</span>
+        </button>
+        <button class="icon-cell danger" title="回收站" @click="router.push('/recycle-bin')">
+          <span class="icon-chip danger-chip"><AppIcon name="trash" :size="20" /></span>
+          <span class="icon-label">回收站</span>
         </button>
       </div>
     </section>
@@ -359,6 +365,10 @@ function planTotal(p: { add: number; cover: number }) {
   grid-template-columns: repeat(4, 1fr);
   gap: 8px 4px;
 }
+.icon-grid.two {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
 .icon-cell {
   border: 0;
   background: transparent;
@@ -367,6 +377,13 @@ function planTotal(p: { add: number; cover: number }) {
   flex-direction: column;
   align-items: center;
   gap: 4px;
+}
+.icon-cell.danger .icon-label {
+  color: var(--error);
+}
+.danger-chip {
+  background: var(--error-soft);
+  color: var(--error);
 }
 .icon-chip {
   width: 48px;
