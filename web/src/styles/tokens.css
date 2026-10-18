@@ -1,0 +1,100 @@
+/* Awwwards-informed instrument theme — 工具仪表盘 + 霓虹青（源自蜗牛图标气质） */
+:root {
+  --bg: #0b0f0e;
+  --bg-2: #101614;
+  --surface: #141c19;
+  --glass: rgba(22, 32, 28, 0.72);
+  --ink: #e9f2ee;
+  --muted: #7e918a;
+  --faint: #3d4a45;
+  --accent: #2ed3b7;
+  --accent-soft: rgba(46, 211, 183, 0.12);
+  --accent-glow: rgba(46, 211, 183, 0.35);
+  --accent-deep: #1aa88f;
+  --accent-bright: #7af0d8;
+  --amber: #f0a04b;
+  --amber-soft: rgba(240, 160, 75, 0.14);
+  --error: #ff6b6b;
+  --error-soft: rgba(255, 107, 107, 0.12);
+  --error-border: rgba(255, 107, 107, 0.55);
+  --stroke: rgba(255, 255, 255, 0.08);
+  --stroke-strong: rgba(255, 255, 255, 0.14);
+  --primary: var(--accent);
+  --on-primary: #041412;
+  --primary-soft: var(--accent-soft);
+  --primary-container: var(--accent-soft);
+  --tertiary: var(--amber);
+  --tertiary-soft: var(--amber-soft);
+  --muted-text: var(--muted);
+  --panel-deep: #0a1018;
+  --btn-h: 44px;
+  --btn-h-sm: 36px;
+  --dur-fast: 80ms;
+  --radius-card: 20px;
+  --radius-field: 14px;
+  --radius-pill: 999px;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --glow: 0 0 24px var(--accent-glow);
+  --font: 'PingFang SC', 'Microsoft YaHei', -apple-system, 'Segoe UI', sans-serif;
+  --font-data: ui-monospace, 'SF Mono', Consolas, 'PingFang SC', monospace;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font);
+  background: #050807;
+  color: var(--ink);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: min(100%, 430px);
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(46, 211, 183, 0.09), transparent 55%),
+    radial-gradient(80% 40% at 100% 20%, rgba(240, 160, 75, 0.06), transparent 50%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  position: relative;
+  box-sizing: border-box;
+  /* 状态栏：safe-area 读不到时用 --status-bar-h（Capacitor 兜底 28px） */
+  padding-top: calc(var(--safe-top) + var(--status-bar-h, 0px));
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tabnum {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
