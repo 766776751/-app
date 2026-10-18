@@ -13,8 +13,8 @@ async function applyNativeChrome() {
   if (!Capacitor.isNativePlatform()) return
   try {
     await StatusBar.setOverlaysWebView({ overlay: false })
-    await StatusBar.setStyle({ style: Style.Dark })
-    await StatusBar.setBackgroundColor({ color: '#0b0f0e' }).catch(() => undefined)
+    await StatusBar.setStyle({ style: Style.Light })
+    await StatusBar.setBackgroundColor({ color: '#f4f7f6' }).catch(() => undefined)
     document.documentElement.style.setProperty('--status-bar-h', '0px')
   } catch (e) {
     console.warn('StatusBar setup failed', e)

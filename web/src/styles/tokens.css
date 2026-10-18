@@ -1,40 +1,40 @@
-/* Awwwards-informed instrument theme — 工具仪表盘 + 霓虹青（源自蜗牛图标气质） */
+/* Light ledger theme — 高对比浅色，优先阳光下可读 */
 :root {
-  --bg: #0b0f0e;
-  --bg-2: #101614;
-  --surface: #141c19;
-  --glass: rgba(22, 32, 28, 0.72);
-  --ink: #e9f2ee;
-  --muted: #7e918a;
-  --faint: #3d4a45;
-  --accent: #2ed3b7;
-  --accent-soft: rgba(46, 211, 183, 0.12);
-  --accent-glow: rgba(46, 211, 183, 0.35);
-  --accent-deep: #1aa88f;
-  --accent-bright: #7af0d8;
-  --amber: #f0a04b;
-  --amber-soft: rgba(240, 160, 75, 0.14);
-  --error: #ff6b6b;
-  --error-soft: rgba(255, 107, 107, 0.12);
-  --error-border: rgba(255, 107, 107, 0.55);
-  --stroke: rgba(255, 255, 255, 0.08);
-  --stroke-strong: rgba(255, 255, 255, 0.14);
+  --bg: #f4f7f6;
+  --bg-2: #eef3f1;
+  --surface: #ffffff;
+  --glass: rgba(255, 255, 255, 0.92);
+  --ink: #0f1f1a;
+  --muted: #4d635c;
+  --faint: #8aa39a;
+  --accent: #0d9488;
+  --accent-soft: rgba(13, 148, 136, 0.12);
+  --accent-glow: rgba(13, 148, 136, 0.22);
+  --accent-deep: #0f766e;
+  --accent-bright: #14b8a6;
+  --amber: #b45309;
+  --amber-soft: rgba(180, 83, 9, 0.12);
+  --error: #dc2626;
+  --error-soft: rgba(220, 38, 38, 0.1);
+  --error-border: rgba(220, 38, 38, 0.45);
+  --stroke: rgba(15, 31, 26, 0.1);
+  --stroke-strong: rgba(15, 31, 26, 0.18);
   --primary: var(--accent);
-  --on-primary: #041412;
+  --on-primary: #ffffff;
   --primary-soft: var(--accent-soft);
   --primary-container: var(--accent-soft);
   --tertiary: var(--amber);
   --tertiary-soft: var(--amber-soft);
   --muted-text: var(--muted);
-  --panel-deep: #0a1018;
+  --panel-deep: #e8eeec;
   --btn-h: 44px;
   --btn-h-sm: 36px;
   --dur-fast: 80ms;
   --radius-card: 20px;
   --radius-field: 14px;
   --radius-pill: 999px;
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-  --glow: 0 0 24px var(--accent-glow);
+  --shadow: 0 8px 28px rgba(15, 31, 26, 0.1);
+  --glow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 6px 16px rgba(13, 148, 136, 0.25);
   --font: 'PingFang SC', 'Microsoft YaHei', -apple-system, 'Segoe UI', sans-serif;
   --font-data: ui-monospace, 'SF Mono', Consolas, 'PingFang SC', monospace;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -52,7 +52,7 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: var(--font);
-  background: #050807;
+  background: #e7eeeb;
   color: var(--ink);
 }
 
@@ -67,12 +67,11 @@ body {
   max-height: 100dvh;
   overflow: hidden;
   background:
-    radial-gradient(120% 60% at 50% 0%, rgba(46, 211, 183, 0.09), transparent 55%),
-    radial-gradient(80% 40% at 100% 20%, rgba(240, 160, 75, 0.06), transparent 50%),
+    radial-gradient(120% 50% at 50% 0%, rgba(13, 148, 136, 0.08), transparent 55%),
+    radial-gradient(80% 36% at 100% 12%, rgba(180, 83, 9, 0.05), transparent 50%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
   position: relative;
   box-sizing: border-box;
-  /* 状态栏：safe-area 读不到时用 --status-bar-h（Capacitor 兜底 28px） */
   padding-top: calc(var(--safe-top) + var(--status-bar-h, 0px));
 }
 

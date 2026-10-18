@@ -36,6 +36,7 @@ Copy-Item "app\build\outputs\apk\release\app-release.apk" "..\..\报销统计神
 - Capacitor: appId `com.lq.bxsb`, JDK **21** (`org.gradle.java.home` in `web/android/gradle.properties`), `android.overridePathCheck=true`, 阿里云 maven 优先。
 - Plugins: `@capacitor/app`（分层返回）/ `status-bar` / `filesystem` / `share`.
 - **Default vehicle = 新能源 (ELECTRIC)** built-in (personal app).
+- **主题：全局浅色账本风**（阳光可读优先，`tokens.css` 浅色令牌；勿改回暗色仪表盘）。
 - XLS: SpreadsheetML；标题 `私车公用{month}月里程统计汇总`；单位默认「公司」；金额列 **2 位小数**；末行合计；**Filesystem + Share**（勿 WebView Blob 下载）。
 - JSON 备份 / 未报销 ZIP 同走 `shareBlob`；**导入前有差异预览弹窗**（禁止静默覆盖）；可「复制备份到剪贴板」。
 - Numpad + `+` 累加；清空需二次确认；日期仅 `YYYY-MM-DD`。

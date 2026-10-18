@@ -278,7 +278,7 @@ function pick(cell: DayCell) {
   min-height: 42px;
   border: 1px solid var(--stroke);
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.18);
+  background: #ffffff;
   color: var(--muted);
   display: flex;
   align-items: center;
@@ -294,7 +294,7 @@ function pick(cell: DayCell) {
 }
 .cal-cell.has {
   color: var(--ink);
-  border-color: rgba(46, 211, 183, 0.35);
+  border-color: rgba(13, 148, 136, 0.4);
 }
 .cal-cell.lv1 {
   background: rgba(46, 211, 183, 0.18);
@@ -359,7 +359,7 @@ function pick(cell: DayCell) {
   display: flex;
   gap: 8px;
   align-items: baseline;
-  background: rgba(0, 0, 0, 0.2);
+  background: #ffffff;
   border: 1px solid var(--stroke);
   border-radius: 10px;
   padding: 8px 10px;
@@ -374,6 +374,6 @@ function pick(cell: DayCell) {
 }
 .cal-trip .right {
   margin-left: auto;
-  color: var(--accent);
+  color: var(--amber);
 }
 </style>

@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* 底栏为 fixed，内容区自己撑高度；勿再给 shell 加大 padding 造成空滚 */
   padding-bottom: calc(80px + var(--safe-bottom));
   box-sizing: border-box;
 }
@@ -14,17 +13,16 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  /* 内容不够高时不要再往下拉出空白 */
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: 12px 16px 24px;
 }
 
-/* Awwwards: dark glass panels, not light cards */
+/* 近白卡片：高对比，阳光可读 */
 .glass-card {
   background: var(--glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--stroke);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow);
@@ -50,7 +48,6 @@
   height: 14px;
   border-radius: 2px;
   background: var(--accent);
-  box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .btn {
@@ -79,7 +76,7 @@
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.04);
+  background: #ffffff;
   color: var(--ink);
   border: 1px solid var(--stroke-strong);
 }
@@ -104,14 +101,15 @@
   color: var(--muted);
   margin-bottom: 4px;
   letter-spacing: 0.04em;
+  font-weight: 500;
 }
 
 .field-box {
   width: 100%;
   min-height: 42px;
   border-radius: 12px;
-  border: 1px solid var(--stroke);
-  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--stroke-strong);
+  background: #ffffff;
   color: var(--ink);
   padding: 0 12px;
   outline: none;
@@ -123,8 +121,8 @@
 }
 
 .field-box:focus {
-  border-color: rgba(46, 211, 183, 0.55);
-  box-shadow: 0 0 0 3px rgba(46, 211, 183, 0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 select.field-box,
@@ -137,14 +135,14 @@ input.field-box {
   height: 40px;
   border-radius: 12px;
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-deep);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   font-size: 13px;
   font-weight: 700;
-  border: 1px solid var(--stroke);
+  border: 1px solid rgba(13, 148, 136, 0.18);
 }
 
 .chip-row {
@@ -158,7 +156,7 @@ input.field-box {
 .chip {
   flex: 0 0 auto;
   border: 1px solid var(--stroke-strong);
-  background: rgba(255, 255, 255, 0.03);
+  background: #ffffff;
   border-radius: var(--radius-pill);
   padding: 8px 14px;
   font-size: 13px;
@@ -167,12 +165,11 @@ input.field-box {
 
 .chip.on {
   background: var(--accent-soft);
-  border-color: rgba(46, 211, 183, 0.45);
-  color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-deep);
   font-weight: 600;
 }
 
-/* Instrument hero */
 .hero-instrument {
   position: relative;
   overflow: hidden;
@@ -199,7 +196,7 @@ input.field-box {
 .hero-value span {
   font-size: 0.4em;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-deep);
   letter-spacing: 0;
   margin-left: 6px;
 }
@@ -233,7 +230,7 @@ input.field-box {
   margin-top: 14px;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(15, 31, 26, 0.08);
   overflow: hidden;
 }
 
@@ -241,7 +238,6 @@ input.field-box {
   display: block;
   height: 100%;
   background: linear-gradient(90deg, var(--accent), var(--accent-bright));
-  box-shadow: 0 0 12px var(--accent-glow);
   transition: width 0.35s ease;
 }
 
@@ -256,7 +252,7 @@ input.field-box {
   padding: 8px 6px;
   border-radius: 16px;
   border: 1px solid var(--stroke);
-  background: rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .stat-tile .icon-chip {
@@ -296,7 +292,7 @@ input.field-box {
   min-width: 40px;
   height: 40px;
   border-radius: 8px;
-  border: 1px solid var(--stroke);
+  border: 1px solid rgba(180, 83, 9, 0.25);
   background: var(--amber-soft);
   color: var(--amber);
   font-size: 10px;
@@ -307,7 +303,7 @@ input.field-box {
 }
 
 .list-item {
-  background: rgba(0, 0, 0, 0.22);
+  background: #ffffff;
   border: 1px solid var(--stroke);
   border-radius: 16px;
   padding: 10px 12px;
@@ -316,6 +312,12 @@ input.field-box {
   gap: 12px;
   align-items: flex-start;
   cursor: pointer;
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+
+.list-item:active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
 }
 
 .list-item .l {
@@ -338,7 +340,7 @@ input.field-box {
 }
 
 .list-item .r b {
-  color: var(--accent);
+  color: var(--amber);
   font-family: var(--font-data);
 }
 
@@ -349,24 +351,26 @@ input.field-box {
   font-size: 10px;
   padding: 3px 10px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--stroke);
+  border: 1px solid transparent;
 }
 
 .badge.pending {
   background: var(--error-soft);
   color: var(--error);
+  border-color: rgba(220, 38, 38, 0.2);
 }
 
 .badge.paid {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-deep);
+  border-color: rgba(13, 148, 136, 0.2);
 }
 
 .empty {
   text-align: center;
   padding: 28px 16px;
   border-radius: var(--radius-card);
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.55);
   border: 1px dashed var(--stroke-strong);
 }
 
@@ -392,9 +396,9 @@ input.field-box {
   left: 50%;
   bottom: calc(96px + var(--safe-bottom));
   transform: translateX(-50%);
-  background: rgba(12, 20, 18, 0.92);
-  border: 1px solid var(--stroke-strong);
-  color: var(--ink);
+  background: rgba(15, 31, 26, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f5faf8;
   padding: 10px 16px;
   border-radius: 14px;
   font-size: 13px;
@@ -410,7 +414,6 @@ input.field-box {
   opacity: 1;
 }
 
-/* Floating glass bottom nav — awwwards utility pattern */
 .bottom-nav {
   position: fixed;
   left: 50%;
@@ -418,7 +421,7 @@ input.field-box {
   bottom: calc(10px + var(--safe-bottom));
   width: min(calc(100% - 24px), 406px);
   height: 64px;
-  background: rgba(18, 26, 24, 0.82);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--stroke-strong);
@@ -462,18 +465,19 @@ input.field-box {
 }
 
 .bottom-nav a.router-link-active {
-  color: var(--accent);
+  color: var(--accent-deep);
+  font-weight: 600;
 }
 
 .bottom-nav a.router-link-active .nav-ico {
   background: var(--accent-soft);
-  box-shadow: 0 0 16px var(--accent-glow);
+  box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.18);
 }
 
 .pad-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.28);
+  background: rgba(15, 31, 26, 0.28);
   z-index: 40;
   display: flex;
   align-items: flex-end;
@@ -489,14 +493,14 @@ input.field-box {
   border: 1px solid var(--stroke-strong);
   border-radius: 24px;
   padding: 10px 16px 12px;
-  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 -8px 40px rgba(15, 31, 26, 0.18);
 }
 
 .pad-display {
   height: 56px;
   border-radius: 16px;
-  border: 1px solid rgba(46, 211, 183, 0.35);
-  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  background: rgba(13, 148, 136, 0.06);
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -504,7 +508,7 @@ input.field-box {
   font-family: var(--font-data);
   font-size: 26px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent-deep);
   margin: 8px 0 10px;
 }
 
@@ -518,7 +522,7 @@ input.field-box {
   height: 56px;
   border-radius: 18px;
   border: 1px solid var(--stroke);
-  background: rgba(255, 255, 255, 0.03);
+  background: #f7faf9;
   font-family: var(--font-data);
   font-size: 24px;
   font-weight: 600;
@@ -527,7 +531,7 @@ input.field-box {
 
 .pad-key.soft {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-deep);
 }
 
 .pad-actions {
@@ -546,8 +550,8 @@ input.field-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid var(--stroke);
+  background: rgba(180, 83, 9, 0.06);
+  border: 1px solid rgba(180, 83, 9, 0.18);
   border-radius: 16px;
   padding: 12px 14px;
 }
@@ -574,18 +578,19 @@ input.field-box {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: rgba(16, 22, 20, 0.92);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
   border: 1px solid var(--stroke-strong);
   border-radius: 20px;
   padding: 12px;
+  box-shadow: var(--shadow);
 }
 
 .xls-scroll {
   flex: 1;
   overflow: auto;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.25);
+  background: #ffffff;
   border: 1px solid var(--stroke);
 }
 
@@ -606,7 +611,7 @@ input.field-box {
 
 .xls-scroll th {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-deep);
   position: sticky;
   top: 0;
 }
@@ -614,13 +619,13 @@ input.field-box {
 .xls-title td {
   border: 0;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--accent-deep);
   font-size: 14px;
   padding: 10px 8px;
 }
 
 .xls-sum td {
-  background: rgba(46, 211, 183, 0.1);
+  background: rgba(13, 148, 136, 0.1);
   font-weight: 700;
   color: var(--ink);
 }
