@@ -23,7 +23,7 @@ Git: remote `git@github.com:766776751/-app.git`；`main` = V1 稳定打包分支
 cd web
 npm install
 npm run dev       # http://localhost:5173 (Vite, server.host=true)
-npm run build     # vue-tsc -b --force || vite build → dist/  (见下方警告)
+npm run build     # vue-tsc -b --force && vite build → dist/  （类型失败会阻断打包）
 npm run preview   # 本地预览 dist/ ：http://localhost:4173
 npx cap sync android   # 把 dist/ 同步进 android/（须先 build）
 cd android
@@ -46,7 +46,7 @@ Copy-Item "app\build\outputs\apk\release\app-release.apk" "..\..\报销统计神
 - 目的地最多 50 条，超出自动淘汰低频；回收站软删超 90 天提示清理。
 - 数据库打开走 `openBxsbDb()` 重试（安卓 WebView IndexedDB 偶发失败）。
 
-> ⚠️ **构建不拦截类型错误**：`build` = `vue-tsc -b --force || vite build`，`||` 使类型检查失败仍回退到 `vite build`，TS 报错不会阻断打包。要强制类型安全请改成 `&&`。
+> ⚠️ ~~构建不拦截类型错误~~：**已改为 `&&`**——`build` = `vue-tsc -b --force && vite build`，类型检查失败会阻断打包（勿改回 `||`，否则 tsc 成功时可能跳过 vite 导致 dist 陈旧）。
 > **无 lint / 无测试**：仓库未配置 ESLint / Prettier / Vitest / Jest，`package.json` 仅含 dev / build / preview。如需单测建议引入 Vitest（与 Vite 同构，零额外配置），运行单测即 `npx vitest run src/utils/xlsExporter.spec.ts`。
 
 ### Ship / ADB
